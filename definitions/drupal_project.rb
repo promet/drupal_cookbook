@@ -4,9 +4,18 @@ define :drupal_project, :user => 'drupal', :httpd_group => 'www-data', :reposito
   site_name   = params[:site_name]
   drupal_user = params[:user]
   httpd_group = params[:httpd_group]
-  drupal_repo = params[:repository]  ? params[:repository]  : nil
-  drupal_rev  = params[:revision]    ? params[:revision]    : nil
-  ssh_wrap    = params[:ssh_wrapper] ? params[:ssh_wrapper] : nil
+  drupal_repo = params[:repository]   ? params[:repository]   : nil
+  drupal_rev  = params[:revision]     ? params[:revision]     : nil
+  ssh_wrap    = params[:ssh_wrapper]  ? params[:ssh_wrapper]  : nil
+  extensions  = params[:extensions]   ? params[:extensions]   : []
+
+  memcached = false
+  memcached = true if extensions.include? 'memcached'
+
+  if memcached
+    include_recipe      "drupal_projects::memcached"
+    memcached_instance  site_name
+  end
 
   drupal_root = drupal_path
   unless drupal_repo.nil?
@@ -25,13 +34,13 @@ define :drupal_project, :user => 'drupal', :httpd_group => 'www-data', :reposito
   end
 
   drupal_site site_name do
-    drupal_root drupal_root
-    drupal_user drupal_user
-    httpd_group httpd_group
-    site_uri    drupal_uri
-    cookbook    "drupal_projects"
-    enable      true
+    drupal_root   drupal_root
+    drupal_user   drupal_user
+    httpd_group   httpd_group
+    site_uri      drupal_uri
+    cookbook      "drupal_projects"
+    enable        true
+    components    extensions
   end
 
-  execute "#{Chef::Config[:file_cache_path]}/file-permissions.sh --httpd_group=#{httpd_group} --drupal_path=#{drupal_root} --drupal_user=#{drupal_user}"
 end

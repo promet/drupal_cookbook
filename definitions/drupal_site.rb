@@ -4,7 +4,9 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
   site_uri    = params[:site_uri]
   drupal_root = params[:drupal_root]
   site_path   = "#{drupal_root}/sites/#{site_uri}"
-  drupal_user = params[:drupal_user] ? params[:drupal_user] : node['apache']['user']
+  drupal_user = params[:drupal_user]  ? params[:drupal_user]    : node['apache']['user']
+  components  = params[:components]   ? params[:components]     : []
+  httpd_group = params[:httpd_group]  ? params[:httpd_group]    : node['apache']['group']
 
   directory "#{site_path}/files" do
     owner drupal_user
@@ -24,11 +26,14 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
       cookbook params[:cookbook]
     end
     variables(
-      :username => db_user,
-      :password => db_password,
-      :database => db_name
+      :username   => db_user,
+      :password   => db_password,
+      :database   => db_name,
+      :components => components
     )
   end
+
+  execute "#{Chef::Config[:file_cache_path]}/file-permissions.sh --httpd_group=#{httpd_group} --drupal_path=#{drupal_root} --drupal_user=#{drupal_user}"
 
   web_app site_name do
     server_name     site_uri

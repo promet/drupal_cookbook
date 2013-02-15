@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe 'git'
+
 include_recipe 'apt'
 
 apt_repository 'dotdeb' do
@@ -27,11 +27,14 @@ apt_repository 'dotdeb' do
   distribution node['lsb']['codename']
 end
 
-include_recipe 'apache2'
-include_recipe 'apache2::mod_php5'
 include_recipe 'php'
 include_recipe 'php::module_mysql'
 include_recipe 'php::module_gd'
+include_recipe 'php::module_apc'
+
+include_recipe 'git'
+include_recipe 'apache2'
+include_recipe 'apache2::mod_php5'
 include_recipe 'database::mysql'
 include_recipe 'mysql::server'
 
