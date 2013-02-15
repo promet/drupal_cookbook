@@ -19,7 +19,7 @@ Vagrant::Config.run do |config|
   config.vm.host_name = "drupal-deploy-berkshelf"
 
   config.vm.box = "squeeze"
-  config.vm.box_url = "https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box"
+  config.vm.box_url = "https://s3.amazonaws.com/wa.milton.aws.bucket01/sqeeze.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
