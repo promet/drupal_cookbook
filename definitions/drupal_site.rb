@@ -8,10 +8,16 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
   components  = params[:components]   ? params[:components]     : []
   httpd_group = params[:httpd_group]  ? params[:httpd_group]    : node['apache']['group']
 
+  directory "#{site_path}" do
+    owner drupal_user
+    group node['apache']['group']
+    not_if "stat #{site_path}"
+  end
+
   directory "#{site_path}/files" do
     owner drupal_user
     group node['apache']['group']
-    recursive true
+    not_if "stat #{site_path}/files"
   end
 
   db_name     = "#{site_name}DB"
@@ -25,6 +31,10 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
     if params[:cookbook]
       cookbook params[:cookbook]
     end
+    not_if do 
+      File.exists? "#{site_path}/settings.php"
+    end
+
     variables(
       :username   => db_user,
       :password   => db_password,
@@ -33,7 +43,7 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
     )
   end
 
-  execute "#{Chef::Config[:file_cache_path]}/file-permissions.sh --httpd_group=#{httpd_group} --drupal_path=#{drupal_root} --drupal_user=#{drupal_user}"
+  # execute "#{Chef::Config[:file_cache_path]}/file-permissions.sh --httpd_group=#{httpd_group} --drupal_path=#{drupal_root} --drupal_user=#{drupal_user}"
 
   web_app site_name do
     server_name     site_uri

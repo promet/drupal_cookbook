@@ -18,6 +18,7 @@
 #
 
 include_recipe 'apt'
+include_recipe 'postfix'
 
 apt_repository 'dotdeb' do
   uri "http://packages.dotdeb.org"
