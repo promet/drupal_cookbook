@@ -1,7 +1,7 @@
 define :drupal_project, :user => 'drupal', :httpd_group => 'www-data', :repository => nil, :revision => 'master' do
   drupal_path = params[:name]
-  drupal_uri  = params[:drupal_uri]
-  site_name   = params[:site_name]
+  drupal_uri  = params[:drupal_uri]   ? params[:drupal_uri]   : nil
+  site_name   = params[:site_name]    ? params[:site_name]    : nil
   drupal_user = params[:user]
   httpd_group = params[:httpd_group]
   drupal_repo = params[:repository]   ? params[:repository]   : nil
@@ -33,14 +33,16 @@ define :drupal_project, :user => 'drupal', :httpd_group => 'www-data', :reposito
     drupal_root = drupal_deploy.current_path
   end
 
-  drupal_site site_name do
-    drupal_root   drupal_root
-    drupal_user   drupal_user
-    httpd_group   httpd_group
-    site_uri      drupal_uri
-    cookbook      "drupal_projects"
-    enable        true
-    components    extensions
+  if site_name and drupal_uri and drupal_root
+    drupal_site site_name do
+      drupal_root   drupal_root
+      drupal_user   drupal_user
+      httpd_group   httpd_group
+      site_uri      drupal_uri
+      cookbook      "drupal_projects"
+      enable        true
+      components    extensions
+    end
   end
 
 end
