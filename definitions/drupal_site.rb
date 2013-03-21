@@ -8,16 +8,10 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
   components  = params[:components]   ? params[:components]     : []
   httpd_group = params[:httpd_group]  ? params[:httpd_group]    : node['apache']['group']
 
-  directory "#{site_path}" do
-    owner drupal_user
-    group node['apache']['group']
-    not_if "stat #{site_path}"
-  end
-
   directory "#{site_path}/files" do
     owner drupal_user
     group node['apache']['group']
-    not_if "stat #{site_path}/files"
+    recursive true
   end
 
   db_name     = "#{site_name}DB"
@@ -31,10 +25,6 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
     if params[:cookbook]
       cookbook params[:cookbook]
     end
-    not_if do 
-      File.exists? "#{site_path}/settings.php"
-    end
-
     variables(
       :username   => db_user,
       :password   => db_password,
