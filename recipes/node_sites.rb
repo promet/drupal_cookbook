@@ -23,22 +23,21 @@ projects = node['drupal']['projects'].to_hash
 
 projects.each do |p_name, project|
 
-  drupal_root = "/var/drupals/#{p_name}/www"
+  project_root = "/var/drupals/#{p_name}"
+  doc_root = "#{project_root}/www"
 
-  drupal_project drupal_root
+  drupal_project doc_root
 
   sites = project['sites']
 
   sites.each do |site_name, site|
     drupal_site site_name do
-      drupal_root   drupal_root
+      drupal_root   doc_root
       site_uri      site['uri']
     end
     if site['build']
-      execute "build-#{site_name}" do
-        cwd     drupal_root
-        command "/var/drupals/#{p_name}/build/drush-build.sh --uri='#{site['uri']}'"
-        user    'vagrant'
+      execute "su vagrant -c #{site['build']}" do
+        cwd     project_root
       end
     end
   end

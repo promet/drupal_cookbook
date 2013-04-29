@@ -21,7 +21,7 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
   template "#{site_path}/settings.php" do
     source    'settings.php.erb'
     # owner     drupal_user
-    group     node['apache']['group']
+    # group     node['apache']['group']
     if params[:cookbook]
       cookbook params[:cookbook]
     else
