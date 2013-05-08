@@ -2,8 +2,9 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
 
   site_name   = params[:name]
   site_uri    = params[:site_uri]
+  site_subdir = params[:site_subdir] ? params[:site_subdir] : site_uri
   drupal_root = params[:drupal_root]
-  site_path   = "#{drupal_root}/sites/#{site_uri}"
+  site_path   = "#{drupal_root}/sites/#{site_subdir}"
   drupal_user = params[:drupal_user]  ? params[:drupal_user]    : node['apache']['user']
   components  = params[:components]   ? params[:components]     : []
   httpd_group = params[:httpd_group]  ? params[:httpd_group]    : node['apache']['group']

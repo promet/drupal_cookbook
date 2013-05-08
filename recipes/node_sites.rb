@@ -34,6 +34,7 @@ projects.each do |p_name, project|
     drupal_site site_name do
       drupal_root   doc_root
       site_uri      site['uri']
+      site_subdir   site['subdir'] ? site['subdir'] : site['uri']
     end
     if site['build']
       execute "su vagrant -c #{site['build']}" do
