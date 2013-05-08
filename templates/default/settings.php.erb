@@ -216,6 +216,10 @@ $databases = array (
   ),
 );
 
+// a stupid compromise for d6
+
+$db_url = 'mysql://<%= @username %>:<%= @password %>@localhost/<%= @database %>'
+
 /**
  * Access control for update.php script.
  *
