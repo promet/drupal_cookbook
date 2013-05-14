@@ -26,7 +26,7 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
     if params[:cookbook]
       cookbook params[:cookbook]
     else
-      cookbook "drupal_projects"
+      cookbook "drupal"
     end
     variables(
       :username   => db_user,

@@ -58,7 +58,7 @@ Vagrant::Config.run do |config|
     }
 
     chef.run_list = [
-      "recipe[drupal_projects::default]"
+      "recipe[drupal::default]"
     ]
   end
 end

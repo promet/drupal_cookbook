@@ -13,7 +13,7 @@ define :drupal_project, :user => 'drupal', :httpd_group => 'www-data', :reposito
   memcached = true if extensions.include? 'memcached'
 
   if memcached
-    include_recipe      "drupal_projects::memcached"
+    include_recipe      "drupal::memcached"
     memcached_instance  site_name
   end
 
@@ -39,7 +39,7 @@ define :drupal_project, :user => 'drupal', :httpd_group => 'www-data', :reposito
       drupal_user   drupal_user
       httpd_group   httpd_group
       site_uri      drupal_uri
-      cookbook      "drupal_projects"
+      cookbook      "drupal"
       enable        true
       components    extensions
     end

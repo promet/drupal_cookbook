@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'drupal_projects::default'
+include_recipe 'drupal::default'
 
 projects = node['drupal']['projects'].to_hash
 
