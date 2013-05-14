@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: drupal_projects
-# Recipe:: data_bag
+# Cookbook Name:: drupal
+# Recipe:: node_sites
 #
 # Copyright (C) 2013 Will Milton
 # 
@@ -37,8 +37,8 @@ projects.each do |p_name, project|
       site_subdir   site['subdir'] ? site['subdir'] : site['uri']
     end
     if site['build']
-      execute "su vagrant -c #{site['build']}" do
-        cwd     project_root
+      execute site['build'] do
+        cwd project_root
       end
     end
   end
