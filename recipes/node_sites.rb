@@ -23,8 +23,8 @@ projects = node['drupal']['projects'].to_hash
 
 projects.each do |p_name, project|
 
-  project_root = "/var/drupals/#{p_name}"
-  doc_root = "#{project_root}/www"
+  project_root = project['root']
+  doc_root = project['doc_root']
 
   drupal_project doc_root
 
