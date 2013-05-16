@@ -1,0 +1,18 @@
+---
+driver_plugin: vagrant
+
+platforms:
+- name: ubuntu-12.04
+  driver_config:
+    box: canonical-ubuntu-12.04
+    box_url: http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box
+    require_chef_omnibus: true
+
+suites:
+- name: default
+  run_list: ["recipe[drupal]"]
+  attributes:
+    mysql:
+      server_root_password: 'rootpass'
+      server_debian_password: 'debianpass'
+      server_repl_password: 'replpass'
