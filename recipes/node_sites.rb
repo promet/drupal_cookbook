@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe 'drupal_projects::default'
+include_recipe 'drupal::default'
 
 node['drupal']['sites'].to_hash.each do |uri, info|
   site = drupal_site uri do
