@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #
 # Cookbook Name:: drupal
 # Recipe:: node_sites
