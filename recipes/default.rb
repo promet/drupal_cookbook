@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: drupal_deploy
+# Cookbook Name:: drupal
 # Recipe:: default
 #
 # Copyright (C) 2013 Will Milton
@@ -18,8 +18,6 @@
 #
 
 include_recipe 'apt'
-include_recipe 'postfix'
-
 apt_repository 'dotdeb' do
   uri "http://packages.dotdeb.org"
   components ["all"]
@@ -28,20 +26,15 @@ apt_repository 'dotdeb' do
   distribution node['lsb']['codename']
 end
 
+include_recipe 'postfix'
 include_recipe 'php'
 include_recipe 'php::module_mysql'
 include_recipe 'php::module_gd'
 include_recipe 'php::module_apc'
+include_recipe 'php::module_curl'
 
 include_recipe 'git'
 include_recipe 'apache2'
 include_recipe 'apache2::mod_php5'
 include_recipe 'database::mysql'
 include_recipe 'mysql::server'
-
-cookbook_file "#{Chef::Config[:file_cache_path]}/file-permissions.sh" do
-  source  'file-permissions.sh'
-  mode    '755'
-end
-
-drush '7.x-5.8'

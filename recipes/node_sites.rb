@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #
 # Cookbook Name:: drupal
 # Recipe:: node_sites
@@ -19,27 +20,11 @@
 
 include_recipe 'drupal_projects::default'
 
-projects = node['drupal']['projects'].to_hash
-
-projects.each do |p_name, project|
-
-  project_root = project['root']
-  doc_root = project['doc_root']
-
-  drupal_project doc_root
-
-  sites = project['sites']
-
-  sites.each do |site_name, site|
-    drupal_site site_name do
-      drupal_root   doc_root
-      site_uri      site['uri']
-      site_subdir   site['subdir'] ? site['subdir'] : site['uri']
-    end
-    if site['build']
-      execute site['build'] do
-        cwd project_root
-      end
-    end
+node['drupal']['sites'].to_hash.each do |uri, info|
+  site = drupal_site uri do
+    db_init true
+  end
+  info.each do |parameter, value|
+    site.send(parameter, value)
   end
 end

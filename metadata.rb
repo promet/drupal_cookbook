@@ -1,4 +1,4 @@
-name             "drupal_projects"
+name             "drupal"
 maintainer       "Will Milton"
 maintainer_email "wa.milton@gmail.com"
 license          "Apache 2.0"

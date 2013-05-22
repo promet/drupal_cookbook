@@ -8,3 +8,7 @@ Gemfile.lock
 .*.sw[a-z]
 *.un~
 /cookbooks
+/tmp
+/spec/cookbooks
+.kitchen/
+.kitchen.local.yml
