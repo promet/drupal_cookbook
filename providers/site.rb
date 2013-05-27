@@ -40,6 +40,11 @@ action :create do
     allow_override  ['All']
   end
 
+  hostsfile_entry '127.0.1.1' do
+    hostname  uri
+    action    :append
+  end
+
   if new_resource.db_init
     mysql_init new_resource.db_username, new_resource.db_password, new_resource.db
   end

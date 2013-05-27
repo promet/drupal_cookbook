@@ -52,7 +52,8 @@ function _array_path_depth_set($path, $info) {
 
 function load_file_by_type($file) {
   // Forgive me for what I am about to do.
-  $extension = end(explode('.', $file));
+  $parts = explode('.', $file);
+  $extension = end($parts);
   switch($extension) {
   case 'yml':
   case 'yaml':
