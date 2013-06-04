@@ -26,12 +26,21 @@ apt_repository 'dotdeb' do
   distribution node['lsb']['codename']
 end
 
+apt_repository 'dotdeb-php54' do
+  uri "http://packages.dotdeb.org"
+  components ["all"]
+  key "http://www.dotdeb.org/dotdeb.gpg"
+  deb_src true
+  distribution "#{node['lsb']['codename']}-php54"
+end
+
 include_recipe 'postfix'
 include_recipe 'php'
 include_recipe 'php::module_mysql'
 include_recipe 'php::module_gd'
-include_recipe 'php::module_apc'
+# include_recipe 'php::module_apc'
 include_recipe 'php::module_curl'
+package 'php5-apc'
 
 include_recipe 'git'
 include_recipe 'apache2'

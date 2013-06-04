@@ -1,7 +1,9 @@
 action :create do
 
-  site_path = "#{new_resource.root}/sites/#{new_resource.subdir}"
   group = new_resource.group.nil? ? node['apache']['group'] : new_resource.group
+  uri       = new_resource.uri
+  doc_root  = new_resource.doc_root ? new_resource.doc_root : new_resource.root
+  site_path = "#{doc_root}/sites/#{new_resource.subdir}"
 
   directory site_path do
     recursive true
@@ -28,10 +30,6 @@ action :create do
   end
 
   settings_compile site_path
-
-  #TODO: figure out why I have to do this for these attributes but not others.
-  uri       = new_resource.uri
-  doc_root  = new_resource.doc_root ? new_resource.doc_root : new_resource.root
   web_app new_resource.uri do
     server_name     uri
     docroot         doc_root
