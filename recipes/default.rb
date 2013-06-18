@@ -23,16 +23,18 @@ apt_repository 'dotdeb' do
   components ["all"]
   key "http://www.dotdeb.org/dotdeb.gpg"
   deb_src true
-  distribution node['lsb']['codename']
+  # fml
+  distribution 'squeeze'
 end
 
-apt_repository 'dotdeb-php54' do
-  uri "http://packages.dotdeb.org"
-  components ["all"]
-  key "http://www.dotdeb.org/dotdeb.gpg"
-  deb_src true
-  distribution "#{node['lsb']['codename']}-php54"
-end
+# apt_repository 'dotdeb-php54' do
+#   uri "http://packages.dotdeb.org"
+#   components ["all"]
+#   key "http://www.dotdeb.org/dotdeb.gpg"
+#   deb_src true
+#   # fml
+#   distribution 'squeeze'
+# end
 
 include_recipe 'postfix'
 include_recipe 'php'
