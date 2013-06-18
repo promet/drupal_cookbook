@@ -61,10 +61,12 @@ def settings_compile(site_path)
     end
   end
 
+  # TODO: break this out into its own LWRP
   template "#{globals_conf_d}/databases.json" do
     owner   new_resource.owner
     group   new_resource.group
     source  "databases.my.default.json.erb"
+    cookbook  'drupal'
     mode    0660
     variables ({
       username: new_resource.db_username,
@@ -76,6 +78,7 @@ def settings_compile(site_path)
   template "#{globals_conf_d}/globals.default.json" do
     owner   new_resource.owner
     group   new_resource.group
+    cookbook  'drupal'
     source  "globals.default.json.erb"
     mode    0660
   end
