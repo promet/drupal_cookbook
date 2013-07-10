@@ -81,6 +81,11 @@ def settings_compile(site_path)
     cookbook  'drupal'
     source  "globals.default.json.erb"
     mode    0660
+    variables ({
+      username: new_resource.db_username,
+      password: new_resource.db_password,
+      database: new_resource.db,
+    })
   end
 
 end
