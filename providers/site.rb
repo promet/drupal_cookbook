@@ -1,13 +1,18 @@
 action :create do
 
   group = new_resource.group.nil? ? node['apache']['group'] : new_resource.group
+  owner = new_resource.owner.nil? node['apache']['user'] : new_resource.owner
   uri       = new_resource.uri
-  doc_root  = new_resource.doc_root ? new_resource.doc_root : new_resource.root
+  doc_root  = new_resource.doc_root ? ::File.join(new_resource.root, new_resource.doc_root) : new_resource.root
   site_path = "#{doc_root}/sites/#{new_resource.subdir}"
 
+  directory new_resource.settings_dir do
+    owner new_resource.owner
+    mode 0700
+  end
+
   directory site_path do
-    recursive true
-    owner     new_resource.owner unless new_resource.owner.nil?
+    owner     new_resource.owner
     group     group
     mode      0775
   end
