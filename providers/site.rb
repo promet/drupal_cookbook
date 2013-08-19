@@ -1,15 +1,18 @@
 action :create do
 
   group = new_resource.group.nil? ? node['apache']['group'] : new_resource.group
-  owner = new_resource.owner.nil? node['apache']['user'] : new_resource.owner
+  owner = new_resource.owner.nil? ? node['apache']['user'] : new_resource.owner
   uri       = new_resource.uri
   doc_root  = new_resource.doc_root ? ::File.join(new_resource.root, new_resource.doc_root) : new_resource.root
   site_path = "#{doc_root}/sites/#{new_resource.subdir}"
 
+if !new_resource.settings_dir.nil?
   directory new_resource.settings_dir do
-    owner new_resource.owner
-    mode 0700
+    owner     new_resource.owner
+    mode      0700
+    recursive true
   end
+end
 
   directory site_path do
     owner     new_resource.owner
@@ -34,7 +37,7 @@ action :create do
     end
   end
 
-  settings_compile site_path
+  settings_compile new_resource.settings_dir
   web_app new_resource.uri do
     server_name     uri
     docroot         doc_root
@@ -53,8 +56,8 @@ action :create do
   end
 end
 
-def settings_compile(site_path)
-  site_conf_d     = "#{site_path}/settings.conf.d"
+def settings_compile(settings_path)
+  site_conf_d     = "#{settings_path}/settings.conf.d"
   ini_conf_d      = "#{site_conf_d}/ini.conf.d"
   globals_conf_d  = "#{site_conf_d}/globals.conf.d"
 
