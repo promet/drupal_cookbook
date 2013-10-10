@@ -1,12 +1,9 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.hostname = "drupal-berkshelf"
+  config.omnibus.chef_version = :latest
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "squeeze"
@@ -80,8 +77,7 @@ Vagrant.configure("2") do |config|
     }
 
     chef.run_list = [
-        "recipe[drupal::default]",
-        "recipe[drupal::foo]"
+        "recipe[drupal::drush]",
     ]
   end
 end
