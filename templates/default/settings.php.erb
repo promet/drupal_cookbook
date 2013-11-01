@@ -7,10 +7,12 @@ function globals_import($globals_conf_d) {
   $depth_matrix = array();
 
   foreach ($it as $file) {
-    $path = $it->getSubPathname();
-    $depth = count(explode('/', $path));
-    $info = load_file_by_type($globals_conf_d . '/' . $path);
-    $depth_matrix[$depth][] = _array_path_depth_set($path, $info);
+    if (!$it->isDir()) {
+      $path = $it->getSubPathname();
+      $depth = count(explode('/', $path));
+      $info = load_file_by_type($globals_conf_d . '/' . $path);
+      $depth_matrix[$depth][] = _array_path_depth_set($path, $info);
+    }
   }
 
   foreach ($depth_matrix as $depth => $configs) {
