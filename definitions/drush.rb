@@ -5,6 +5,7 @@ define :drush, :drush_bin => '/usr/local/bin' do
   drush_version   = params[:version] ? params[:version] : nil
   drush_version   ||= params[:name]
 
+  # allow both stupid drupal version numbers and good semver numbers
   version_parts   = drush_version.split('-').pop.split('.')
   if version_parts.size < 3
     version_parts += [0] * (3 - version_parts.size)
