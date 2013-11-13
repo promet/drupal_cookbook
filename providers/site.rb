@@ -36,9 +36,6 @@ action :create do
       source source
     end
       variables({
-        username:       new_resource.db_username,
-        password:       new_resource.db_password,
-        database:       new_resource.db,
         settings_path:  settings_path,
       })
   end
@@ -57,10 +54,6 @@ action :create do
     hostname  uri
     action    :append
   end
-
-  if new_resource.db_init
-    mysql_init new_resource.db_username, new_resource.db_password, new_resource.db
-  end
 end
 
 def settings_compile(settings_path)
@@ -77,52 +70,10 @@ def settings_compile(settings_path)
       recursive true
     end
   end
-
-  # TODO: break this out into its own LWRP
-  template "#{globals_conf_d}/databases.json" do
-    owner   new_resource.owner
-    group   new_resource.group
-    source  "databases.my.default.json.erb"
-    cookbook  'drupal'
+  file "#{globals_conf_d}/globals.default.json" do
+    owner     owner
+    group     group
+    content   config.to_json
     mode    0660
-    variables({
-      username: new_resource.db_username,
-      password: new_resource.db_password,
-      database: new_resource.db,
-    })
-  end
-
-  template "#{globals_conf_d}/globals.default.json" do
-    owner   new_resource.owner
-    group   new_resource.group
-    cookbook  'drupal'
-    source  "globals.default.json.erb"
-    mode    0660
-    variables({
-      username: new_resource.db_username,
-      password: new_resource.db_password,
-      database: new_resource.db,
-    })
-  end
-
-end
-
-def mysql_init(user, pass, db)
-  mysql_connection = {
-    host:     'localhost',
-    username: 'root',
-    password: node['mysql']['server_root_password']
-  }
-
-  mysql_database db do
-    connection  mysql_connection
-    action      :create
-  end
-
-  mysql_database_user user do
-    connection    mysql_connection
-    password      pass
-    database_name db
-    action        [:create, :grant]
   end
 end
