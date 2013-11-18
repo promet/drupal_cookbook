@@ -6,12 +6,7 @@ description      "Installs/Configures some drupal projects"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.1.1"
 
-depends "apache2"
 depends "ark"
-depends "database"
-depends "git"
 depends "hostsfile"
-depends "memcached"
-depends "mysql",      "> 2.2"
 depends "php"
-depends "postfix"
+depends "apache2"
