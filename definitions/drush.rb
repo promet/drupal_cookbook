@@ -1,7 +1,6 @@
 define :drush, :drush_bin => '/usr/local/bin' do
 
-  drush_root      = node['drupal']['drush']['root']
-
+  drush_root      = node.drupal.drush.root
   drush_version   = params[:version] ? params[:version] : nil
   drush_version   ||= params[:name]
 
@@ -11,9 +10,7 @@ define :drush, :drush_bin => '/usr/local/bin' do
     version_parts += [0] * (3 - version_parts.size)
   end
   drush_version = version_parts.join('.');
-
-  drush_uri       = "https://github.com/drush-ops/drush/archive"
-
+  drush_uri     = "https://github.com/drush-ops/drush/archive"
   include_recipe 'ark'
   ark 'drush' do
     action :install
@@ -24,5 +21,4 @@ define :drush, :drush_bin => '/usr/local/bin' do
 
   # This is a stupid kludge for drush 'just failing' the first time.
   execute "drush"
-
 end
