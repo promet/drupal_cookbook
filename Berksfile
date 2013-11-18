@@ -1,5 +1,4 @@
 site :opscode
 
 metadata
-cookbook "mysql", ">= 3.0.0"
-cookbook "postfix", "= 2.1.6"
+cookbook "test_drupal", path: "./test/cookbooks/test_drupal", group: :integration
