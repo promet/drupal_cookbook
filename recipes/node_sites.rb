@@ -19,10 +19,8 @@
 
 include_recipe 'drupal::default'
 
-node['drupal']['sites'].to_hash.each do |uri, info|
-  site = drupal_site uri do
-    db_init true
-  end
+node.drupal.sites.to_hash.each do |uri, info|
+  site = drupal_site uri
   info.each do |parameter, value|
     site.send(parameter, value)
   end
