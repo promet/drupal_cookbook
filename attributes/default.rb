@@ -1,4 +1,3 @@
-default.drupal.drush.root    = '/etc/drushes'
 default.drupal.drush.version = '7.x-5.9'
 default.drupal.sites_dir = '/var/www/sites'
 default.drupal.user = 'root'
