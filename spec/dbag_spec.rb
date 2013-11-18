@@ -1,28 +1,28 @@
 require 'spec_helper'
 
 describe 'drupal::dbag' do
-  let(:chef_run) {
-    ChefSpec::Runner.new(:step_into => ['drupal_site', 'web_app']) do |node|
+  let(:chef_run) do
+    ChefSpec::Runner.new(:step_into => %w(drupal_site web_app)) do |node|
       node.set['drupal']['data_bag_items'] = %w(foo)
     end.converge described_recipe
-  }
+  end
   before do
-    stub_data_bag_item('drupal', 'foo').and_return({
-      'id' => 'foo',
-      'doc_root' => 'www',
-      'uri' => 'foo.net',
-      'config' => {
-        'databases' => {
-          'default' => {
-            'default' => {
-              'database' => 'fooDB',
-              'username' => 'fooDBA',
-              'password' => 'fooPASS',
+    stub_data_bag_item('drupal', 'foo').and_return(
+      id: 'foo',
+      doc_root: 'www',
+      uri: 'foo.net',
+      config: {
+        databases: {
+          default: {
+            default: {
+              database: 'fooDB',
+              username: 'fooDBA',
+              password: 'fooPASS',
             }
           }
         }
       }
-    })
+    )
   end
   it 'templates settings.php' do
     expect(chef_run).to render_file('/var/www/sites/foo.net/www/sites/default/settings.php').with_content('globals_import($globals_conf_d);')

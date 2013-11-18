@@ -39,7 +39,7 @@ suites:
     roles_path: test/fixtures/roles
     data_bags_path: test/fixtures/data_bags
     attributes:
-      drupal:
-        foo.net:
-          root: /var/drupals/foo
-          owner: vagrant
+      mysql:
+        server_debian_password: heywhatasweetpass
+        server_root_password:  heywhatasweetpass
+        server_repl_password: heywhatasweetpass

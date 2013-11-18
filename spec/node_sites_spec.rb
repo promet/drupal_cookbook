@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'drupal::node_sites' do
-  let(:chef_run) {
-    ChefSpec::Runner.new(:step_into => ['drupal_site', 'web_app']) do |node|
+  let(:chef_run) do
+    ChefSpec::Runner.new(:step_into => %w(drupal_site web_app)) do |node|
       node.set['drupal']['sites']['foo.net'] = {
         'doc_root' => 'www',
         'root' => '/var/drupals/foo',
@@ -19,7 +19,7 @@ describe 'drupal::node_sites' do
         }
       }
     end.converge described_recipe
-  }
+  end
   it 'templates settings.php' do
     expect(chef_run).to render_file('/var/drupals/foo/www/sites/default/settings.php').with_content('globals_import($globals_conf_d);')
   end

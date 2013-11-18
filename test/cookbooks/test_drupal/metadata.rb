@@ -6,8 +6,8 @@ description      'Installs/Configures test_drupal'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.1.0'
 
-depends "build-essential"
-depends "drupal"
-depends "database"
-depends "ark"
-depends "chef-solo-search"
+depends 'build-essential'
+depends 'drupal'
+depends 'database'
+depends 'ark'
+depends 'chef-solo-search'

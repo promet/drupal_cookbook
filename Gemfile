@@ -4,6 +4,7 @@ gem 'berkshelf'
 gem 'chefspec'
 gem 'foodcritic'
 gem 'strainer'
+gem 'rubocop'
 
 # Guard
 gem 'guard'

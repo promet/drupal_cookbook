@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe 'drupal::redis' do
-  let(:chef_run) {
-    runner = ChefSpec::Runner.new(:step_into => ['drupal_shared_module', 'drupal_drush'])
+  let(:chef_run) do
+    runner = ChefSpec::Runner.new(:step_into => %w(drupal_shared_module drupal_drush))
     runner.converge described_recipe
-  }
+  end
 
   it 'creates the shared modules dir' do
     expect(chef_run).to create_directory(chef_run.node.drupal.shared_dir)

@@ -36,9 +36,9 @@ action :create do
   file ::File.join(site_path, 'env.json') {
     owner   owner
     group   group
-    content ::JSON.pretty_generate({
+    content ::JSON.pretty_generate(
       conf_dir: settings_path
-    })
+    )
     mode    0660
   }
 
