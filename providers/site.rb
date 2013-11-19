@@ -1,8 +1,6 @@
 action :create do
-  # TODO: generalize to work with nginx or default to root
-  group = new_resource.group || node.apache.group
-  owner = new_resource.owner || node.apache.user
   settings_path = new_resource.settings_dir || "/etc/drupals/#{new_resource.uri}"
+  site_settings_path = ::File.join(settings_path, new_resource.uri)
   if new_resource.doc_root
     doc_root = ::File.join(new_resource.root, new_resource.doc_root)
   else
@@ -10,32 +8,36 @@ action :create do
   end
   site_path = "#{doc_root}/sites/#{new_resource.subdir}"
 
-  directory settings_path do
-    owner     owner
-    group     group
-    mode      0750
-    recursive true
+  [settings_path, site_settings_path].each do |path|
+    directory path do
+      owner     new_resource.owner
+      group     new_resource.group
+      mode      0750
+      recursive true
+    end
   end
 
-  directory site_path do
-    owner     owner
-    group     group
-    mode      0775
-    recursive true
+  [new_resource.root, doc_root, site_path].each do |path|
+    directory path do
+      owner     new_resource.owner
+      group     new_resource.group
+      mode      0775
+      recursive true
+    end
   end
 
   cookbook_file 'settings.php' do
     action  :create_if_missing
-    owner   owner
-    group   group
+    owner   new_resource.owner
+    group   new_resource.group
     mode    0660
     path    ::File.join(site_path, 'settings.php')
     source  'settings.php'
   end
 
   file ::File.join(site_path, 'env.json') {
-    owner   owner
-    group   group
+    owner   new_resource.owner
+    group   new_resource.group
     content ::JSON.pretty_generate(
       conf_dir: settings_path
     )
@@ -65,14 +67,14 @@ def settings_compile(settings_path)
   config = new_resource.config
   [ini_conf_d, globals_conf_d].each do |dir|
     directory dir do
-      owner     owner
-      group     group
+      owner     new_resource.owner
+      group     new_resource.group
       recursive true
     end
   end
   file ::File.join(globals_conf_d, 'globals.default.json') do
-    owner   owner
-    group   group
+    owner   new_resource.owner
+    group   new_resource.group
     content ::JSON.pretty_generate(config)
     mode    0660
   end

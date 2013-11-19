@@ -10,5 +10,7 @@
         "host": "localhost"
       }
     }
-  }
+  },
+  "uri": "foo.net",
+  "doc_root": "www"
 }

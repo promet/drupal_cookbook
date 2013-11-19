@@ -26,9 +26,10 @@ suites:
       - recipe[drupal::node_sites]
     attributes:
       drupal:
-        foo.net:
-          root: /var/drupals/foo
-          owner: vagrant
+        sites:
+          foo.net:
+            root: /var/drupals/foo
+            owner: vagrant
   - name: redis_mysql
     run_list:
       - recipe[test_drupal]
@@ -36,6 +37,10 @@ suites:
       - recipe[test_drupal::tar]
       - recipe[drupal::dbag]
       - recipe[drupal::redis]
+    attributes:
+      drupal:
+        data_bag_items:
+          - foo
     roles_path: test/fixtures/roles
     data_bags_path: test/fixtures/data_bags
     attributes:
