@@ -1,4 +1,4 @@
-use_inline_resources
+# use_inline_resources
 
 action :create do
   settings_path = new_resource.settings_dir || "/etc/drupals/#{new_resource.uri}"
@@ -19,9 +19,9 @@ action :create do
   end
 
   settings_compile settings_path
-
-  web_app new_resource.uri do
-    server_name     new_resource.uri
+  uri = new_resource.uri
+  web_app uri do
+    server_name     uri
     docroot         doc_root
     server_aliases  []
     cookbook        'apache2'
