@@ -1,11 +1,12 @@
 action :create do
 
-  group = new_resource.group.nil? ? node['apache']['group'] : new_resource.group
-  owner = new_resource.owner.nil? ? node['apache']['user'] : new_resource.owner
-  uri       = new_resource.uri
-  doc_root  = new_resource.doc_root ? ::File.join(new_resource.root, new_resource.doc_root) : new_resource.root
-  site_path = "#{doc_root}/sites/#{new_resource.subdir}"
-  settings_path = new_resource.settings_dir.nil? ?  "/etc/drupals/#{uri}" : new_resource.settings_dir
+  group          = new_resource.group.nil? ? node['apache']['group'] : new_resource.group
+  owner          = new_resource.owner.nil? ? node['apache']['user'] : new_resource.owner
+  uri            = new_resource.uri
+  doc_root       = new_resource.doc_root ? ::File.join(new_resource.root, new_resource.doc_root) : new_resource.root
+  server_aliases = new_resource.server_aliases
+  site_path      = "#{doc_root}/sites/#{new_resource.subdir}"
+  settings_path  = new_resource.settings_dir.nil? ?  "/etc/drupals/#{uri}" : new_resource.settings_dir
 
   directory settings_path do
     owner     new_resource.owner
@@ -43,7 +44,7 @@ action :create do
   web_app new_resource.uri do
     server_name     uri
     docroot         doc_root
-    server_aliases  []
+    server_aliases  server_aliases
     cookbook        'apache2'
     allow_override  ['All']
   end
