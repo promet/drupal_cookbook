@@ -2,6 +2,9 @@
 driver_plugin: vagrant
 driver_config:
   require_chef_omnibus: true
+  customize:
+    memory: 1024
+    cpuexecutioncap: 50
 
 platforms:
   - name: ubuntu-12.04
@@ -19,7 +22,20 @@ suites:
     run_list:
       - recipe[test_drupal]
       - recipe[drupal::dbag]
+  - name: mass_virtual
+    run_list:
+      - recipe[test_drupal::tar]
+      - recipe[drupal::mass_virtual]
+      - role[db_master]
     data_bags_path: test/fixtures/data_bags
+    roles_path: test/fixtures/roles
+    attributes:
+      drupal:
+        data_bag_items: default
+      mysql:
+        server_debian_password: heywhatasweetpass
+        server_root_password:  heywhatasweetpass
+        server_repl_password: heywhatasweetpass
   - name: node_sites
     run_list:
       - recipe[test_drupal]

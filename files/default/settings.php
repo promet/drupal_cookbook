@@ -69,7 +69,8 @@ function load_file_by_type($file) {
   return $info;
 }
 
-$settings_conf_d = json_decode(file_get_contents(__DIR__ . '/env.json'))['conf_dir'];
+$config = json_decode(file_get_contents(__DIR__ . '/env.json'));
+$settings_conf_d = $config->conf_dir;
 $globals_conf_d = $settings_conf_d . '/globals.conf.d';
 $ini_conf_d = $settings_conf_d . '/ini.conf.d';
 

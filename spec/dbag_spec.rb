@@ -24,9 +24,6 @@ describe 'drupal::dbag' do
       }
     )
   end
-  it 'templates settings.php' do
-    expect(chef_run).to render_file('/var/www/sites/foo.net/www/sites/default/settings.php').with_content('globals_import($globals_conf_d);')
-  end
   it 'creates settings conf dir' do
     expect(chef_run).to create_directory '/etc/drupals/foo.net'
   end
