@@ -29,5 +29,6 @@ include_recipe 'drupal::drush'
   directory node['drupal'][dir] do
     owner node['drupal']['user']
     group node['drupal']['group']
+    recursive true
   end
 end
