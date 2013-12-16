@@ -25,7 +25,9 @@ include_recipe 'php::module_apc'
 
 include_recipe 'drupal::drush'
 
-[node['drupal']['apps_dir'], node['drupal']['settings_dir'], node['drupal']['sites_dir']].each do |dir|
-  owner node['drupal']['drupal_user']
-  group node['drupal']['drupal_group']
+%w(apps_dir settings_dir sites_dir).each do |dir|
+  directory node['drupal'][dir] do
+    owner node['drupal']['user']
+    group node['drupal']['group']
+  end
 end
