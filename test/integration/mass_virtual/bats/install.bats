@@ -1,6 +1,6 @@
 @test "install drupal" {
-  cd /var/www/sites/foobar.baz && drush si -y
-  cd /var/www/sites/foobar.baz && drush cc all
-  cd /var/www/sites/foobar.baz && drush dl views
-  cd /var/www/sites/foobar.baz && drush en -y views
+  cd /var/www/sites/foobar.baz/www && drush si -y
+  cd /var/www/sites/foobar.baz/www && drush cc all
+  cd /var/www/sites/foobar.baz/www && drush dl views
+  cd /var/www/sites/foobar.baz/www && drush en -y views
 }

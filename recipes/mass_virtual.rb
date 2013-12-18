@@ -6,8 +6,9 @@ include_recipe "apache2"
 
 apache_module "vhost_alias"
 web_app "mass_virtual" do
-  docroot node['drupal']['sites_dir']
-  allow_override 'All'
-  cookbook 'drupal'
-  template 'mass_virtual.conf.erb'
+  docroot         node['drupal']['sites_dir']
+  rel             'www'
+  allow_override  'All'
+  cookbook        'drupal'
+  template        'mass_virtual.conf.erb'
 end

@@ -1,5 +1,5 @@
 <VirtualHost *:<%= @params[:server_port] || node['apache']['listen_ports'].first %>>
-  VirtualDocumentRoot <%= @params[:docroot] %>/%0
+VirtualDocumentRoot <%= @params[:docroot] %>/%0<%= "/#{@params[:rel]}" if @params[:rel] %>/
   RewriteEngine On
 
   <Directory <%= @params[:docroot] %>/*>

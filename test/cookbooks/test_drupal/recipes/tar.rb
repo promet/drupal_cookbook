@@ -11,8 +11,9 @@
 include_recipe 'test_drupal'
 include_recipe 'postfix'
 
-ark 'foobar.baz' do
-  path node.drupal.sites_dir
+directory "#{node.drupal.sites_dir}/foobar.baz"
+ark 'www' do
+  path "#{node.drupal.sites_dir}/foobar.baz"
   url 'http://ftp.drupal.org/files/projects/drupal-7.23.tar.gz'
   action :put
 end
@@ -20,7 +21,7 @@ end
 execute "chown -R vagrant:www-data #{node.drupal.sites_dir}/foobar.baz"
 
 cookbook_file "settings.php" do
-  path "#{node.drupal.sites_dir}/foobar.baz/sites/default/settings.php"
+  path "#{node.drupal.sites_dir}/foobar.baz/www/sites/default/settings.php"
   cookbook 'drupal'
   owner 'vagrant'
   group 'www-data'
@@ -33,7 +34,7 @@ drupal_settings "#{node.drupal.settings_dir}/default" do
   group 'www-data'
 end
 
-file ::File.join(node.drupal.sites_dir, 'foobar.baz', 'sites', 'default', 'env.json') do
+file ::File.join(node.drupal.sites_dir, 'foobar.baz', 'www', 'sites', 'default', 'env.json') do
   owner   'vagrant'
   group   'www-data'
   content ::JSON.pretty_generate(

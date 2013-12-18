@@ -9,3 +9,9 @@
   [[ `curl -o /dev/null -w %{http_code} foobar.baz/index.php` -ne 403 ]]
   [[ `curl -o /dev/null -w %{http_code} foobar.baz/install.php` -ne 403 ]]
 }
+
+@test "we do better than 500" {
+  [[ `curl -o /dev/null -w %{http_code} foobar.baz` -ne 500 ]]
+  [[ `curl -o /dev/null -w %{http_code} foobar.baz/index.php` -ne 500 ]]
+  [[ `curl -o /dev/null -w %{http_code} foobar.baz/install.php` -ne 500 ]]
+}

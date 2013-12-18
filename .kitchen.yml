@@ -24,8 +24,8 @@ suites:
       - recipe[drupal::dbag]
   - name: mass_virtual
     run_list:
-      - recipe[test_drupal::tar]
       - recipe[drupal::mass_virtual]
+      - recipe[test_drupal::tar]
       - role[db_master]
     data_bags_path: test/fixtures/data_bags
     roles_path: test/fixtures/roles
