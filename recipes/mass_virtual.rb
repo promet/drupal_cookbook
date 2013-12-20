@@ -8,7 +8,7 @@ apache_module "vhost_alias"
 web_app "mass_virtual" do
   docroot         node['drupal']['sites_dir']
   rel             'www'
-  allow_override  'All'
+  allow_override  'None'
   cookbook        'drupal'
   template        'mass_virtual.conf.erb'
 end
