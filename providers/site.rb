@@ -32,7 +32,7 @@ action :create do
     else
       source new_resource.settings_source
     end
-      variables ({
+      variables({
         username:       new_resource.db_username,
         password:       new_resource.db_password,
         database:       new_resource.db,
@@ -79,7 +79,7 @@ def settings_compile(settings_path)
     source  "databases.my.default.json.erb"
     cookbook  'drupal'
     mode    0660
-    variables ({
+    variables({
       username: new_resource.db_username,
       password: new_resource.db_password,
       database: new_resource.db,
@@ -92,7 +92,7 @@ def settings_compile(settings_path)
     cookbook  'drupal'
     source  "globals.default.json.erb"
     mode    0660
-    variables ({
+    variables({
       username: new_resource.db_username,
       password: new_resource.db_password,
       database: new_resource.db,
