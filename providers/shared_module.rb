@@ -17,18 +17,20 @@
 # limitations under the License.
 #
 
-include_recipe 'php'
-include_recipe 'php::module_mysql'
-include_recipe 'php::module_gd'
-include_recipe 'php::module_curl'
-include_recipe 'php::module_apc'
-
-include_recipe 'drupal::drush'
-
-%w(apps_dir settings_dir sites_dir).each do |dir|
-  directory node['drupal'][dir] do
-    owner node['drupal']['user']
-    group node['drupal']['group']
+action :install do
+  directory node.drupal.shared_dir do
     recursive true
+    not_if ::File.exists?(node.drupal.shared_dir)
   end
+
+  new_resource.pear_deps.each do |dep|
+    php_pear dep
+  end
+
+  drupal_drush "dl #{new_resource.module_name} module" do
+    command 'dl'
+    args [new_resource.module_name]
+    options destination: node.drupal.shared_dir
+  end
+  new_resource.updated_by_last_action(true)
 end

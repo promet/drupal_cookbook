@@ -16,19 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe 'drupal'
 
-include_recipe 'php'
-include_recipe 'php::module_mysql'
-include_recipe 'php::module_gd'
-include_recipe 'php::module_curl'
-include_recipe 'php::module_apc'
-
-include_recipe 'drupal::drush'
-
-%w(apps_dir settings_dir sites_dir).each do |dir|
-  directory node['drupal'][dir] do
-    owner node['drupal']['user']
-    group node['drupal']['group']
-    recursive true
-  end
+drupal_shared_module 'redis' do
+  pear_deps %w(redis)
 end

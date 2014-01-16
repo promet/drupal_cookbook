@@ -1,0 +1,21 @@
+<VirtualHost *:<%= @params[:server_port] || node['apache']['listen_ports'].first %>>
+  UseCanonicalName Off
+  VirtualDocumentRoot <%= @params[:docroot] %>/%0<%= "/#{@params[:rel]}" if @params[:rel] %>/
+
+  <Directory <%= @params[:docroot] %>/*>
+    Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
+    AllowOverride <%= [@params[:allow_override] || "None" ].flatten.join " " %>
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule <%= @params[:docroot] %><%= "/.*/#{@params[:rel]}" if @params[:rel] %>/(.*)$ index.php/$1 [L,QSA]
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+  </Directory>
+</VirtualHost>

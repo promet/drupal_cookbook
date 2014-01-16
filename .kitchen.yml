@@ -1,18 +1,66 @@
 ---
 driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+  customize:
+    memory: 1024
+    cpuexecutioncap: 50
 
 platforms:
-- name: ubuntu-12.04
-  driver_config:
-    box: canonical-ubuntu-12.04
-    box_url: http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box
-    require_chef_omnibus: true
+  - name: ubuntu-12.04
 
 suites:
-- name: default
-  run_list: ["recipe[drupal]"]
-  attributes:
-    mysql:
-      server_root_password: 'rootpass'
-      server_debian_password: 'debianpass'
-      server_repl_password: 'replpass'
+  - name: default
+    run_list:
+      - recipe[test_drupal]
+      - recipe[drupal]
+  - name: redis
+    run_list:
+      - recipe[test_drupal]
+      - recipe[drupal::redis]
+  - name: dbag
+    run_list:
+      - recipe[test_drupal]
+      - recipe[drupal::dbag]
+  - name: mass_virtual
+    run_list:
+      - recipe[drupal::mass_virtual]
+      - recipe[test_drupal::tar]
+      - role[db_master]
+    data_bags_path: test/fixtures/data_bags
+    roles_path: test/fixtures/roles
+    attributes:
+      drupal:
+        data_bag_items: default
+      mysql:
+        server_debian_password: heywhatasweetpass
+        server_root_password:  heywhatasweetpass
+        server_repl_password: heywhatasweetpass
+  - name: node_sites
+    run_list:
+      - recipe[test_drupal]
+      - recipe[drupal::node_sites]
+    attributes:
+      drupal:
+        sites:
+          foo.net:
+            root: /var/drupals/foo
+            owner: vagrant
+  - name: redis_mysql
+    run_list:
+      - recipe[test_drupal]
+      - role[db_master]
+      - recipe[test_drupal::tar]
+      - recipe[drupal::dbag]
+      - recipe[drupal::redis]
+    attributes:
+      drupal:
+        data_bag_items:
+          - foo
+    roles_path: test/fixtures/roles
+    data_bags_path: test/fixtures/data_bags
+    attributes:
+      mysql:
+        server_debian_password: heywhatasweetpass
+        server_root_password:  heywhatasweetpass
+        server_repl_password: heywhatasweetpass

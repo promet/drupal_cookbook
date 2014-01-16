@@ -1,0 +1,11 @@
+{
+  "id": "default",
+  "database_master_role": ["db_master"],
+  "databases": {
+    "_default": {
+      "database": "default",
+      "username": "default",
+      "password": "default"
+    }
+  }
+}

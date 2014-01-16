@@ -1,0 +1,16 @@
+{
+  "id": "foo",
+  "databases": {
+    "default": {
+      "default": {
+        "username": "fooDBA",
+        "database": "fooDB",
+        "password": "fooPASS",
+        "driver": "mysql",
+        "host": "localhost"
+      }
+    }
+  },
+  "uri": "foo.net",
+  "doc_root": "www"
+}
