@@ -9,7 +9,7 @@
     RewriteBase /
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule <%= @params[:docroot] %><%= "/.*/#{@params[:rel]}" if @params[:rel] %>/(.*)$ index.php/$1 [L,QSA]
+    RewriteRule <%= @params[:docroot] %><%= "/.*/#{@params[:rel]}" if @params[:rel] %>/(.*)$ index.php/?q=$1 [L,QSA]
     Order allow,deny
     Allow from all
   </Directory>
