@@ -19,7 +19,6 @@ Vagrant.configure("2") do |config|
     chef.run_list = [
         "recipe[drupal]",
         "recipe[drupal::drush]",
-        "recipe[drupal::foo]",
     ]
   end
 end
