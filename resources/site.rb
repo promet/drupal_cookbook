@@ -2,7 +2,7 @@ actions :create,  :delete
 default_action  :create
 
 attribute :uri,             :kind_of => String, :name_attribute => true
-attribute :owner,           :kind_of => [String, NilClass], :default => nil
+attribute :user,            :kind_of => [String, NilClass], :default => nil
 attribute :group,           :kind_of => [String, NilClass], :default => nil
 attribute :root,            :kind_of => String, :default => '/var/www/drupal'
 attribute :doc_root,        :kind_of => [String, NilClass], :default => nil

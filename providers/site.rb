@@ -1,4 +1,4 @@
-# use_inline_resources
+use_inline_resources
 
 action :create do
   settings_path = new_resource.settings_dir || "/etc/drupals/#{new_resource.uri}"
@@ -8,10 +8,9 @@ action :create do
   else
     doc_root = new_resource.root
   end
-
-  [settings_path, site_settings_path, new_resource.root].each do |path|
+  [settings_path, site_settings_path, doc_root].each do |path|
     directory path do
-      owner     new_resource.owner
+      owner     new_resource.user
       group     new_resource.group
       mode      0750
       recursive true
@@ -19,13 +18,13 @@ action :create do
   end
 
   file ::File.join(new_resource.root, 'env.json') do
-    owner   new_resource.owner
+    owner   new_resource.user
     group   new_resource.group
     content ::JSON.pretty_generate(conf_dir: settings_path)
     mode    0660
   end
   drupal_settings settings_path do
-    owner   new_resource.owner
+    owner   new_resource.user
     group   new_resource.group
     config  new_resource.config
   end
