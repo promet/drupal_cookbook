@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf'
-gem 'chefspec'
-gem 'foodcritic'
-gem 'strainer'
+gem 'test-kitchen', '>=1.0.0'
+gem 'chefspec', '~>3'
+gem 'foodcritic', '~>3'
 gem 'rubocop'
 
 # Guard

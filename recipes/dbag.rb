@@ -21,7 +21,8 @@ node.drupal.data_bag_items.each do |item|
   drupal_site drupal_config['uri'] do
     root        ::File.join(node.drupal.sites_dir, drupal_config['uri'])
     doc_root    drupal_config['doc_root']
-    owner       node.drupal.user
+    user        drupal_config['user'] || node.drupal.user
+    group       drupal_config['group'] || node.drupal.group
     config      drupal_config
   end
 end
