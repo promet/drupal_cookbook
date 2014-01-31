@@ -1,6 +1,7 @@
 default.drupal.drush.version = '7.x-5.9'
 default.drupal.sites_dir = '/var/www/sites'
 default.drupal.settings_dir = '/etc/drupal'
+default.drupal.shared_dir = '/usr/local/drupal'
 default.drupal.apps_dir = '/var/drupal'
 default.drupal.sites = {}
 default.drupal.user = 'root'
