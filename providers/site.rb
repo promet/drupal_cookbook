@@ -29,13 +29,13 @@ action :create do
     config  new_resource.config
   end
   uri = new_resource.uri
-  web_app uri do
-    server_name     uri
-    docroot         doc_root
-    server_aliases  []
-    cookbook        'apache2'
-    allow_override  ['All']
-  end
+  # web_app uri do
+  #   server_name     uri
+  #   docroot         doc_root
+  #   server_aliases  []
+  #   cookbook        'apache2'
+  #   allow_override  ['All']
+  # end
   hostsfile_entry '127.0.1.1' do
     hostname  new_resource.uri
     action    :append
