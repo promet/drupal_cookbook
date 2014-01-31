@@ -8,6 +8,7 @@
 #
 
 include_recipe 'drupal'
+include_recipe 'apache2'
 
 directory node.drupal.sites_dir do
   recursive true
