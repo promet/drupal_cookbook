@@ -20,10 +20,11 @@ node.drupal.data_bag_items.each do |item|
   drupal_config = data_bag_item(node.drupal.data_bag, item).to_hash
 
   drupal_site drupal_config['uri'] do
-    root        ::File.join(node.drupal.sites_dir, drupal_config['uri'])
-    doc_root    drupal_config['doc_root']
-    user        drupal_config['user'] || node.drupal.user
-    group       drupal_config['group'] || node.drupal.group
-    config      drupal_config
+    root          ::File.join(node.drupal.sites_dir, drupal_config['uri'])
+    doc_root      drupal_config['doc_root']
+    user          drupal_config['user'] || node.drupal.user
+    group         drupal_config['group'] || node.drupal.group
+    settings_dir  drupal_config['group'] || node.drupal.settings_dir
+    config        drupal_config
   end
 end
