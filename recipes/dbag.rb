@@ -24,7 +24,7 @@ node.drupal.data_bag_items.each do |item|
     doc_root      drupal_config['doc_root']
     user          drupal_config['user'] || node.drupal.user
     group         drupal_config['group'] || node.drupal.group
-    settings_dir  drupal_config['group'] || node.drupal.settings_dir
+    settings_dir  drupal_config['settings_dir'] || node.drupal.settings_dir
     config        drupal_config
   end
 end
