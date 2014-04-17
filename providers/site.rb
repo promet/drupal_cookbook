@@ -23,7 +23,7 @@ action :create do
     content ::JSON.pretty_generate(conf_dir: settings_path)
     mode    0660
   end
-  drupal_settings settings_path do
+  drupal_settings site_settings_path do
     owner   new_resource.user
     group   new_resource.group
     config  new_resource.config
